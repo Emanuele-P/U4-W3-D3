@@ -5,6 +5,8 @@ import ep2024.exceptions.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
+import java.util.UUID;
+
 public class EventDAO {
 
     private final EntityManager em;
@@ -21,13 +23,13 @@ public class EventDAO {
         System.out.println("----------The event: " + event + " has been saved correctly!");
     }
 
-    public Event findById(long eventId) {
-        Event event = em.find(Event.class, eventId);
+    public Event findById(String eventId) {
+        Event event = em.find(Event.class, UUID.fromString(eventId));
         if (event == null) throw new NotFoundException(eventId);
         return event;
     }
 
-    public void deleteById(long eventId) {
+    public void deleteById(String eventId) {
         Event found = this.findById(eventId);
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();

@@ -21,14 +21,14 @@ public class Application {
 //        ed.save(event2);
 //
         try {
-            Event event1DB = ed.findById(102);
+            Event event1DB = ed.findById("");
             System.out.println("------------------------------" + event1DB.getDescription());
         } catch (NotFoundException ex) {
             System.out.println(ex.getMessage());
         }
 
         try {
-            ed.deleteById(152);
+            ed.deleteById("");
         } catch (NotFoundException ex) {
             System.out.println(ex.getMessage());
         }
