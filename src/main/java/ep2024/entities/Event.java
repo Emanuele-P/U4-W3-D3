@@ -1,15 +1,19 @@
 package ep2024.entities;
 
+import ep2024.enums.EventType;
+import ep2024.enums.Location;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "events")
 public class Event {
     @Id
     @GeneratedValue
-    private long id;
+    private UUID id;
     private String title;
     private LocalDate date;
     private String description;
@@ -19,18 +23,26 @@ public class Event {
     @Column(name = "max_number_of_participants")
     private int numOfParticipants;
 
+    @ManyToOne
+    @JoinColumn(name = "location_id", nullable = false)
+    private Location location;
+
+    @OneToMany(mappedBy = "event")
+    private List<Participation> participationList;
+
     public Event() {
     }
 
-    public Event(String title, LocalDate date, String description, EventType type, int numOfParticipants) {
+    public Event(String title, LocalDate date, String description, EventType type, int numOfParticipants, Location location) {
         this.title = title;
         this.date = date;
         this.description = description;
         this.type = type;
         this.numOfParticipants = numOfParticipants;
+        this.location = location;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -40,6 +52,14 @@ public class Event {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public String getDescription() {
@@ -66,23 +86,33 @@ public class Event {
         this.numOfParticipants = numOfParticipants;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public List<Participation> getParticipationList() {
+        return participationList;
+    }
+
+    public void setParticipationList(List<Participation> participationList) {
+        this.participationList = participationList;
     }
 
     @Override
     public String toString() {
-        return System.lineSeparator() + "Event{" +
+        return "Event{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", date='" + date + '\'' +
+                ", date=" + date +
                 ", description='" + description + '\'' +
                 ", type=" + type +
                 ", numOfParticipants=" + numOfParticipants +
-                '}' + System.lineSeparator();
+                ", location=" + location +
+                ", participation=" + participationList +
+                '}';
     }
 }
