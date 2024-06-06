@@ -46,9 +46,8 @@ public class Application {
         personList.add(person2);
         Participation participation1 = new Participation(event1, personList, Status.CONFIRMED);
 //        pad.save(participation1);
-        
+
 //        Event event2 = new Event("Clown school presentation", LocalDate.of(2024, 6, 30), "The theatrical art of clowns", EventType.PRIVATE, 50);
-//
 //
         try {
             Event event1DB = ed.findById("7d217b88-a698-45e1-add3-9272091a840a");
